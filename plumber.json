@@ -1,0 +1,42 @@
+//配置文件，json格式，将文件放在jar对应的user.dir目录下
+{
+  //数据来源
+  "dataSource": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "username": "root",
+    "password": "00000"
+  },
+  //数据目标
+  "dataTarget": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "username": "root",
+    "password": "00000"
+  },
+  //同步任务配置
+  "tableSyncJob": [
+    {
+      //字段转换配置 key:来源表字段名, value:目标表字段名称
+      "mapping": {
+        "id": "id",
+        "log_type": "log_type",
+        "content": "content",
+        "create_date": "create_date",
+        "mark": "mark",
+        "STATUS": "STATUS",
+        "policy_no": "policy_no",
+        "param0": "param0",
+        "param1": "param1",
+        "param2": "param2",
+        "param3": "param3"
+      },
+      //数据来源表 主键/唯一值 字段名称
+      "primaryKey": "id",
+      //目标库.表
+      "target": "issdb_full.common_log",
+      //来源库.表
+      "source": "issdb_3.common_log"
+    }
+  ]
+}
