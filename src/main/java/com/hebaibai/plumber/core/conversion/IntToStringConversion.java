@@ -1,10 +1,13 @@
 package com.hebaibai.plumber.core.conversion;
 
+import org.springframework.stereotype.Component;
+
 /**
  * 从 int 转换为 String
  *
  * @author hjx
  */
+@Component
 public class IntToStringConversion implements Conversion<String> {
 
     @Override

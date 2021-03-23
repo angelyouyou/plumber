@@ -1,5 +1,7 @@
 package com.hebaibai.plumber.core.conversion;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,7 @@ import java.text.SimpleDateFormat;
  *
  * @author hjx
  */
+@Component
 public class SqlDateToStringConversion implements Conversion<String> {
 
     @Override

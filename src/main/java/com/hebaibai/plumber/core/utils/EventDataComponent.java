@@ -4,6 +4,8 @@ import com.github.shyiko.mysql.binlog.event.*;
 import com.hebaibai.plumber.core.conversion.Conversion;
 import com.hebaibai.plumber.core.conversion.ConversionFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,9 +15,13 @@ import java.util.Map;
  * @author hjx
  */
 @Slf4j
-public class EventDataUtils {
+@Component
+public class EventDataComponent {
 
-    public static Long getTableId(EventData eventData) {
+    @Autowired
+    private ConversionFactory conversionFactory;
+
+    public Long getTableId(EventData eventData) {
         DeleteRowsEventData deleteRowsEventData = getDeleteRowsEventData(eventData);
         if (deleteRowsEventData != null) {
             return deleteRowsEventData.getTableId();
@@ -35,35 +41,35 @@ public class EventDataUtils {
         return null;
     }
 
-    public static WriteRowsEventData getWriteRowsEventData(EventData eventData) {
+    public WriteRowsEventData getWriteRowsEventData(EventData eventData) {
         if (eventData instanceof WriteRowsEventData) {
             return (WriteRowsEventData) eventData;
         }
         return null;
     }
 
-    public static DeleteRowsEventData getDeleteRowsEventData(EventData eventData) {
+    public DeleteRowsEventData getDeleteRowsEventData(EventData eventData) {
         if (eventData instanceof DeleteRowsEventData) {
             return (DeleteRowsEventData) eventData;
         }
         return null;
     }
 
-    public static UpdateRowsEventData getUpdateRowsEventData(EventData eventData) {
+    public UpdateRowsEventData getUpdateRowsEventData(EventData eventData) {
         if (eventData instanceof UpdateRowsEventData) {
             return (UpdateRowsEventData) eventData;
         }
         return null;
     }
 
-    public static TableMapEventData getTableMapEventData(EventData eventData) {
+    public TableMapEventData getTableMapEventData(EventData eventData) {
         if (eventData instanceof TableMapEventData) {
             return (TableMapEventData) eventData;
         }
         return null;
     }
 
-    public static String[] getBeforUpdate(EventData eventData) {
+    public String[] getBeforUpdate(EventData eventData) {
         UpdateRowsEventData updateRowsEventData = getUpdateRowsEventData(eventData);
         if (updateRowsEventData == null) {
             return null;
@@ -77,7 +83,7 @@ public class EventDataUtils {
         return values(entry.getKey());
     }
 
-    public static String[] getAfterUpdate(EventData eventData) {
+    public String[] getAfterUpdate(EventData eventData) {
         UpdateRowsEventData updateRowsEventData = getUpdateRowsEventData(eventData);
         if (updateRowsEventData == null) {
             return null;
@@ -91,7 +97,7 @@ public class EventDataUtils {
         return values(entry.getValue());
     }
 
-    private static String[] values(Serializable[] values) {
+    private String[] values(Serializable[] values) {
         String[] val = new String[values.length];
         for (int i = 0; i < values.length; i++) {
             Serializable v = values[i];
@@ -99,7 +105,7 @@ public class EventDataUtils {
                 val[i] = null;
                 continue;
             }
-            Conversion<String> conversion = ConversionFactory.getConversion(String.class, v.getClass());
+            Conversion<String> conversion = conversionFactory.getConversion(String.class, v.getClass());
             val[i] = conversion.conversion(v);
         }
         return val;
@@ -111,7 +117,7 @@ public class EventDataUtils {
      * @param data
      * @return
      */
-    public static String[][] getInsertRows(EventData data) {
+    public String[][] getInsertRows(EventData data) {
         WriteRowsEventData writeRowsEventData = getWriteRowsEventData(data);
         if (writeRowsEventData == null) {
             return null;
@@ -127,7 +133,7 @@ public class EventDataUtils {
         return values;
     }
 
-    public static String[] getDeleteRows(EventData data) {
+    public String[] getDeleteRows(EventData data) {
         DeleteRowsEventData deleteRowsEventData = getDeleteRowsEventData(data);
         if (deleteRowsEventData == null) {
             return null;

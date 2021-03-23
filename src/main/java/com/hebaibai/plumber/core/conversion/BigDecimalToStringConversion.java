@@ -1,5 +1,7 @@
 package com.hebaibai.plumber.core.conversion;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 
 /**
@@ -7,6 +9,7 @@ import java.math.BigDecimal;
  *
  * @author hjx
  */
+@Component
 public class BigDecimalToStringConversion implements Conversion<String> {
 
     @Override

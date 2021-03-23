@@ -1,5 +1,7 @@
 package com.hebaibai.plumber.core.conversion;
 
+import org.springframework.stereotype.Component;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +11,7 @@ import java.util.Date;
  *
  * @author hjx
  */
+@Component
 public class DateToStringConversion implements Conversion<String> {
 
     @Override

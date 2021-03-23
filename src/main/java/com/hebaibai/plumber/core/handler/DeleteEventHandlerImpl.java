@@ -8,7 +8,7 @@ import com.hebaibai.plumber.Style;
 import com.hebaibai.plumber.config.TableSyncJob;
 import com.hebaibai.plumber.core.EventHandler;
 import com.hebaibai.plumber.core.SqlEventData;
-import com.hebaibai.plumber.core.utils.EventDataUtils;
+import com.hebaibai.plumber.core.utils.EventDataComponent;
 import com.hebaibai.plumber.core.utils.TableMateData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ public class DeleteEventHandlerImpl extends UpdateEventHandlerImpl implements Ev
     @Override
     public void handle(Event event, TableSyncJob tableSyncJob) {
         EventData data = event.getData();
-        Long tableId = EventDataUtils.getTableId(data);
+        Long tableId = eventDataComponent.getTableId(data);
         String tableName = entityService.getTableName(tableId);
         String databaseName = entityService.getDatabaseName(tableId);
         if (tableId == null || tableName == null || databaseName == null) {
@@ -55,7 +55,7 @@ public class DeleteEventHandlerImpl extends UpdateEventHandlerImpl implements Ev
         log.info("{}.{}", databaseName, tableName);
         TableMateData tableMateData = tableMateDataMap.get(key);
         Map<String, String> mapping = tableSyncJob.getMapping();
-        String[] rows = EventDataUtils.getDeleteRows(data);
+        String[] rows = eventDataComponent.getDeleteRows(data);
         List<String> columns = tableMateData.getColumns();
         Map<String, String> eventAfterData = new HashMap<>();
         for (int i = 0; i < columns.size(); i++) {

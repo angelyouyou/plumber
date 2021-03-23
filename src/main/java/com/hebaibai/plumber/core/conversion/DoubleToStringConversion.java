@@ -1,10 +1,13 @@
 package com.hebaibai.plumber.core.conversion;
 
+import org.springframework.stereotype.Component;
+
 /**
  * 从 Double 转换为 String
  *
  * @author hjx
  */
+@Component
 public class DoubleToStringConversion implements Conversion<String> {
 
     @Override

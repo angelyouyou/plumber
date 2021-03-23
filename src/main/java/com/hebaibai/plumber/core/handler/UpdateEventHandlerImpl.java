@@ -9,7 +9,7 @@ import com.hebaibai.plumber.component.EntityService;
 import com.hebaibai.plumber.config.TableSyncJob;
 import com.hebaibai.plumber.core.EventHandler;
 import com.hebaibai.plumber.core.SqlEventData;
-import com.hebaibai.plumber.core.utils.EventDataUtils;
+import com.hebaibai.plumber.core.utils.EventDataComponent;
 import com.hebaibai.plumber.core.utils.TableMateData;
 import io.vertx.mysqlclient.MySQLPool;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +38,9 @@ public class UpdateEventHandlerImpl implements EventHandler {
     @Autowired
     protected MySQLPool mySQLPool;
 
+    @Autowired
+    protected EventDataComponent eventDataComponent;
+
     @Override
     public boolean support(Event event) {
         EventHeader header = event.getHeader();
@@ -50,7 +53,7 @@ public class UpdateEventHandlerImpl implements EventHandler {
     @Override
     public void handle(Event event, TableSyncJob tableSyncJob) {
         EventData data = event.getData();
-        Long tableId = EventDataUtils.getTableId(data);
+        Long tableId = eventDataComponent.getTableId(data);
         String tableName = entityService.getTableName(tableId);
         String databaseName = entityService.getDatabaseName(tableId);
         if (tableId == null || tableName == null || databaseName == null) {
@@ -65,8 +68,8 @@ public class UpdateEventHandlerImpl implements EventHandler {
         }
         log.info("{}.{}", databaseName, tableName);
         TableMateData tableMateData = tableMateDataMap.get(key);
-        String[] befor = EventDataUtils.getBeforUpdate(data);
-        String[] after = EventDataUtils.getAfterUpdate(data);
+        String[] befor = eventDataComponent.getBeforUpdate(data);
+        String[] after = eventDataComponent.getAfterUpdate(data);
         //拼装sql需要的数据
         List<String> columns = tableMateData.getColumns();
         Map<String, String> eventBeforData = new HashMap<>();

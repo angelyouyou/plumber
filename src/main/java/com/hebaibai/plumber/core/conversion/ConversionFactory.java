@@ -1,8 +1,8 @@
 package com.hebaibai.plumber.core.conversion;
 
-import lombok.experimental.UtilityClass;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,24 +10,14 @@ import java.util.List;
  *
  * @author hjx
  */
-@UtilityClass
+@Component
 public class ConversionFactory {
 
-    private static final List<Conversion> CONVERSION_LIST = Arrays.asList(
-            new StringlToStringConversion(),
-            new TimestampToStringConversion(),
-            new BigDecimalToStringConversion(),
-            new BytesToStringConversion(),
-            new IntToStringConversion(),
-            new DateToStringConversion(),
-            new SqlDateToStringConversion(),
-            new DoubleToStringConversion(),
-            new LongToStringConversion()
-    );
+    @Autowired
+    private List<Conversion> conversions;
 
-    public static <T> Conversion<T> getConversion(Class<T> to, Class from) {
-
-        for (Conversion conversion : CONVERSION_LIST) {
+    public <T> Conversion<T> getConversion(Class<T> to, Class from) {
+        for (Conversion conversion : conversions) {
             if (conversion.support(to, from)) {
                 return conversion;
             }
