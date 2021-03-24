@@ -8,9 +8,9 @@ import com.hebaibai.plumber.Style;
 import com.hebaibai.plumber.config.TableSyncJob;
 import com.hebaibai.plumber.core.EventHandler;
 import com.hebaibai.plumber.core.SqlEventData;
-import com.hebaibai.plumber.core.utils.EventDataComponent;
 import com.hebaibai.plumber.core.utils.TableMateData;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -103,7 +103,8 @@ public class DeleteEventHandlerImpl extends UpdateEventHandlerImpl implements Ev
                 .append(String.join("and ", wheres));
         String sql = sqlBuilder.toString();
         //执行sql
-        log.info(Style.style(Style.FontColor.GREEN).str(sql));
+        String sqlBeautify = FormatStyle.BASIC.getFormatter().format(sql);
+        log.info(Style.style(Style.FontColor.GREEN).str(sqlBeautify));
         mySQLPool.preparedQuery(sql)
                 .execute()
                 .onFailure(throwable -> {

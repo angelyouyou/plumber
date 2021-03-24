@@ -10,6 +10,7 @@ import com.hebaibai.plumber.core.EventHandler;
 import com.hebaibai.plumber.core.SqlEventData;
 import com.hebaibai.plumber.core.utils.TableMateData;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -121,7 +122,8 @@ public class InsertEventHandlerImpl extends UpdateEventHandlerImpl implements Ev
                 .append(" ) VALUES ( ").append(String.join(", ", columnValues))
                 .append(");");
         String sql = sqlBuilder.toString();
-        log.info(Style.style(Style.FontColor.GREEN).str(sql));
+        String sqlBeautify = FormatStyle.BASIC.getFormatter().format(sql);
+        log.info(Style.style(Style.FontColor.GREEN).str(sqlBeautify));
         mySQLPool.preparedQuery(sql)
                 .execute()
                 .onFailure(throwable -> {

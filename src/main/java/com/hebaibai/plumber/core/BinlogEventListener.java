@@ -29,12 +29,16 @@ public class BinlogEventListener implements EventListener {
      */
     @Override
     public void onEvent(Event event) {
-
         //循环处理,可能一次事件由多个handle共同处理
         for (EventHandler handle : eventHandlers) {
             boolean support = handle.support(event);
             if (!support) {
                 continue;
+            }
+            try {
+                handle.handle(event);
+            } catch (Exception e) {
+                log.error("error", e);
             }
             for (TableSyncJob tableSyncJob : PlumberMain.CONFIG.getTableSyncJob()) {
                 handle.handle(event, tableSyncJob);

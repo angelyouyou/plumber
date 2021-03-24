@@ -157,7 +157,7 @@ public class PlumberMain {
         PoolOptions poolOptions = new PoolOptions().setMaxSize(Runtime.getRuntime().availableProcessors() * 2);
         return MySQLPool.pool(VERTX, connectOptions, poolOptions);
     }
-
+//DefaultListableBeanFactory 运行时修改 bean
     @Bean("tableMateDataMap")
     public Map<String, TableMateData> tableMateDataMap(
             @Autowired DataBaseComponent dataBaseComponent
@@ -184,7 +184,7 @@ public class PlumberMain {
                 tableSyncJob.setPrimaryKey(ids[0]);
             }
             tableMateDataMap.put(data, tableMateData);
-            log.info(Style.style(Style.FontColor.YELLOW).str(builder.create().toJson(tableSyncJob)));
+            log.info(Style.style(Style.FontColor.YELLOW).str("\n{}"), builder.create().toJson(tableSyncJob));
         }
         return tableMateDataMap;
     }

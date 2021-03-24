@@ -2,7 +2,6 @@ package com.hebaibai.plumber.core.handler;
 
 import com.github.shyiko.mysql.binlog.event.*;
 import com.hebaibai.plumber.component.EntityService;
-import com.hebaibai.plumber.config.TableSyncJob;
 import com.hebaibai.plumber.core.EventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class RotateEventHandlerImpl implements EventHandler {
     }
 
     @Override
-    public void handle(Event event, TableSyncJob tableSyncJob) {
+    public void handle(Event event) {
         EventData data = event.getData();
         if (data instanceof RotateEventData) {
             RotateEventData eventData = (RotateEventData) data;

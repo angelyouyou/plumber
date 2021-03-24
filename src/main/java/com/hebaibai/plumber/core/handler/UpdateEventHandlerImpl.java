@@ -13,6 +13,7 @@ import com.hebaibai.plumber.core.utils.EventDataComponent;
 import com.hebaibai.plumber.core.utils.TableMateData;
 import io.vertx.mysqlclient.MySQLPool;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -148,7 +149,8 @@ public class UpdateEventHandlerImpl implements EventHandler {
                 .append(" WHERE ")
                 .append(String.join("AND ", wheres));
         String sql = sqlBuilder.toString();
-        log.info(Style.style(Style.FontColor.GREEN).str(sql));
+        String sqlBeautify = FormatStyle.BASIC.getFormatter().format(sql);
+        log.info(Style.style(Style.FontColor.GREEN).str(sqlBeautify));
         //执行sql
         mySQLPool.preparedQuery(sql)
                 .execute()

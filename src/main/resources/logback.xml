@@ -29,6 +29,6 @@
         <appender-ref ref="FILE"/>
     </root>
 
-<!--    <logger name="com.github.shyiko.mysql.binlog" level="ERROR"/>-->
+    <!--    <logger name="com.github.shyiko.mysql.binlog" level="ERROR"/>-->
 
 </configuration>

@@ -20,12 +20,23 @@ public interface EventHandler {
     boolean support(Event event);
 
     /**
-     * 处理
+     * 处理 TableSyncJob
      *
      * @param event
      * @param tableSyncJob
      * @return
      */
-    void handle(Event event, TableSyncJob tableSyncJob);
+    default void handle(Event event, TableSyncJob tableSyncJob) {
 
+    }
+
+    /**
+     * 处理 TableSyncJob
+     *
+     * @param event
+     * @return
+     */
+    default void handle(Event event) {
+
+    }
 }

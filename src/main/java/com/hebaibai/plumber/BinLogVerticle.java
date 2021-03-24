@@ -14,17 +14,13 @@ import java.io.IOException;
 @Component
 public class BinLogVerticle extends AbstractVerticle {
 
+    public static final long DELAY = 10 * 1000;
     @Autowired
     private BinaryLogClient binaryLogClient;
-
     @Autowired
     private EntityService entityService;
-
     @Autowired
     private DataBaseComponent dataBaseComponent;
-
-    public static final long DELAY = 10 * 1000;
-
 
     @Override
     public void start() throws Exception {

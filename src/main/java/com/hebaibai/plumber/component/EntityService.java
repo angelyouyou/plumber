@@ -14,17 +14,14 @@ import java.util.Optional;
 @Service
 public class EntityService {
 
-    @Autowired
-    private TableIdDao tableIdDao;
-
-    @Autowired
-    private DatabaseIdDao databaseIdDao;
-
-    @Autowired
-    private ConfDao confDao;
-
     private static final String LOG_NAME = "LOG_NAME";
     private static final String POSITION = "POSITION";
+    @Autowired
+    private TableIdDao tableIdDao;
+    @Autowired
+    private DatabaseIdDao databaseIdDao;
+    @Autowired
+    private ConfDao confDao;
 
     public String getLogName() {
         Conf conf = confDao.findByKey(LOG_NAME);

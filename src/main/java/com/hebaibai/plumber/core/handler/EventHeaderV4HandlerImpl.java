@@ -4,7 +4,6 @@ import com.github.shyiko.mysql.binlog.event.Event;
 import com.github.shyiko.mysql.binlog.event.EventHeader;
 import com.github.shyiko.mysql.binlog.event.EventHeaderV4;
 import com.hebaibai.plumber.component.EntityService;
-import com.hebaibai.plumber.config.TableSyncJob;
 import com.hebaibai.plumber.core.EventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class EventHeaderV4HandlerImpl implements EventHandler {
     }
 
     @Override
-    public void handle(Event event, TableSyncJob tableSyncJob) {
+    public void handle(Event event) {
         EventHeader header = event.getHeader();
         long nowPosition = ((EventHeaderV4) header).getPosition();
         if (nowPosition < 0) {
